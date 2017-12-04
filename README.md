@@ -1,0 +1,1 @@
+# minimization_art
