@@ -13,10 +13,5 @@ Perona-Malik diffusion is a well known regularization technique that preserves e
    <img src="images/star.gif?raw=True">
 </p>
 
-<p align="center">
-   <img src="images/kitty.gif?raw=True">
-</p>
-
-
 
 
