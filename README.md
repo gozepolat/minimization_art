@@ -6,9 +6,15 @@ Perona-Malik diffusion is a well known regularization technique that preserves e
 
 ---
 <p align="center">
-<img src="images/profile.gif?raw=True">
-<img src="images/star.gif?raw=True">
-<img src="images/kitty.gif?raw=True">
+   <img src="images/profile.gif?raw=True">
+</p>
+
+<p align="center">
+   <img src="images/star.gif?raw=True">
+</p>
+
+<p align="center">
+   <img src="images/kitty.gif?raw=True">
 </p>
 
 
