@@ -43,37 +43,36 @@ def perona_malik_art(video_path=None):
     pm.cuda()
     lr = 0.000000125
     optimizer = optim.SGD(pm.parameters(), lr=lr, momentum=0.9, dampening=0, weight_decay=0.0005)
-    prev = None
     i = 0
+    
     while True:
         res, image = cap.read()
+        
         if not res:
             print("problem reading the image..")
             exit(-1)
 
         image = image_to_variable(image)
         image = normalize(image)
+        
         out = pm.forward(out)
-
-        # update the learning rate and refresh the operator
         out = Variable(out.data, requires_grad=False)
+        
         if i % 8 != 0:
             out = out * 0.8 + image * 0.2
         else:
             i = 0
         optimizer.zero_grad()
         out = pm.forward(out)
-        loss = torch.sum(torch.pow(pm.gradients*(out - image), 2) + pm.gradients + 10*torch.pow(out*(pm.gradients), 2))# + torch.pow(out[:,0]-out[:,2], 2) + torch.pow(out[:,0]-out[:,1], 2) + torch.pow(out[:,1]-out[:,2], 2))
-        #if prev is not None:
-        #    loss += 0.5 * torch.sum(torch.pow(out - prev, 2))
-        prev = out
+        loss = torch.sum(torch.pow(pm.gradients * (out - image), 2) + pm.gradients + 10 * torch.pow(out * (pm.gradients), 2))
+        
         loss.backward(retain_graph=True)
         optimizer.step()
         i += 1
         if i % 2 != 0:
             continue
 
-        cv2.imshow("dodo", np.rollaxis(squeeze(out, 0).cpu().data.numpy(), 0, 3))
+        cv2.imshow("demo", np.rollaxis(squeeze(out, 0).cpu().data.numpy(), 0, 3))
         cv2.waitKey(1)
 
 
