@@ -14,12 +14,6 @@ from modules.utils import image_to_variable, normalize, imshow, make_operator, i
 from modules.regularizers import PeronaMalik
 
 
-def weights_init(m):
-    if isinstance(m, nn.Conv2d):
-        nn.init.xavier_normal(m.weight.data)
-        nn.init.xavier(m.bias.data)
-
-
 def perona_malik_art(video_path=None):
     print("Perona-Malik on drugs...")
 
@@ -64,6 +58,8 @@ def perona_malik_art(video_path=None):
             i = 0
         optimizer.zero_grad()
         out = pm.forward(out)
+        
+        # make fidelity component less prominent in the loss
         loss = torch.sum(torch.pow(pm.gradients * (out - image), 2) + pm.gradients + 10 * torch.pow(out * (pm.gradients), 2))
         
         loss.backward(retain_graph=True)
